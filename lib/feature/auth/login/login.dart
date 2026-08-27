@@ -88,7 +88,9 @@ class _LoginState extends State<Login> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {forgetpassword(context);},
+                          onPressed: () {
+                            forgetpassword(context);
+                          },
                           child: const Text("Forget Password?"),
                         ),
                       ),
@@ -152,7 +154,13 @@ class _LoginState extends State<Login> {
 
                           Expanded(
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  'home',
+                                  (rout) => false,
+                                );
+                              },
                               child: Container(
                                 alignment: Alignment.center,
                                 height: 50,
@@ -208,7 +216,12 @@ class _LoginState extends State<Login> {
                       "Don't have an account?",
                       style: TextStyle(color: Colors.grey),
                     ),
-                    TextButton(onPressed: () {Navigator.pushNamed(context, 'register');}, child: const Text("Sign Up")),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'register');
+                      },
+                      child: const Text("Sign Up"),
+                    ),
                   ],
                 ),
               ],
