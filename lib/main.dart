@@ -1,5 +1,6 @@
 import 'package:e_commerce/feature/Onboarding/onbord.dart';
 import 'package:e_commerce/feature/auth/login/login.dart';
+import 'package:e_commerce/feature/auth/register/register.dart';
 import 'package:flutter/material.dart';
 
 void main (){
@@ -21,6 +22,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'onbord':(context) => Onbording(),
         'login':(context) =>Login(),
+        "register":(context) => Register()
       },
       home:Onbording() ,
     );
