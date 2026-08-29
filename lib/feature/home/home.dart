@@ -1,9 +1,12 @@
+import 'package:e_commerce/data.dart';
+import 'package:e_commerce/feature/detailsprodect/detailsprodect.dart';
+import 'package:e_commerce/feature/home/models/modelproduct.dart';
+import 'package:e_commerce/feature/home/widget/appbarhome.dart';
+import 'package:e_commerce/feature/home/widget/cardprodecthome.dart';
 import 'package:e_commerce/feature/home/widget/countdowen.dart';
-import 'package:e_commerce/feature/home/widget/flashsalecard.dart';
 import 'package:e_commerce/feature/home/widget/navitem.dart';
-import 'package:e_commerce/feature/home/widget/newarrivals.dart';
-import 'package:e_commerce/feature/home/widget/recommended%20.dart';
 import 'package:e_commerce/feature/home/widget/rowcategorices.dart';
+import 'package:e_commerce/feature/search/search.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -17,23 +20,24 @@ class _HomeState extends State<Home> {
   int currentIndex = 0;
 
   final List<Widget> pages = [
-    const Homepage(),
-    const Center(child: Text("Expplore")),
-    const Center(child: Text("Like")),
-    const Center(child: Text("Profile")),
+    const Homepage(), //0
+
+    const Center(child: Text("card")), //1
+
+    const Center(child: Text("Profile")), //2
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
+      appBar: currentIndex == 0 ? appBarhome(context) : null,
 
       body: pages[currentIndex],
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            currentIndex = 2;
+            currentIndex = 1;
           });
         },
         backgroundColor: Colors.blue,
@@ -42,10 +46,9 @@ class _HomeState extends State<Home> {
         child: const Icon(
           Icons.shopping_bag_outlined,
           color: Colors.white,
-          size: 30,
+          size: 35,
         ),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       bottomNavigationBar: BottomAppBar(
@@ -55,7 +58,7 @@ class _HomeState extends State<Home> {
         child: SizedBox(
           height: 50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               navItem(
                 icon: Icons.home_outlined,
@@ -70,33 +73,9 @@ class _HomeState extends State<Home> {
               ),
 
               navItem(
-                icon: Icons.grid_view_rounded,
-                label: "Expplore",
-                index: 1,
-                currentIndex: currentIndex,
-                onTap: (index) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
-              ),
-
-              navItem(
-                icon: Icons.favorite_border,
-                label: "Like",
-                index: 2,
-                currentIndex: currentIndex,
-                onTap: (index) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
-              ),
-
-              navItem(
                 icon: Icons.person_outline,
                 label: "Profile",
-                index: 3,
+                index: 2,
                 currentIndex: currentIndex,
                 onTap: (index) {
                   setState(() {
@@ -128,17 +107,29 @@ class _HomepageState extends State<Homepage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-              onTap: () {},
-              child: TextFormField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  hintText: "Search Products,brands....",
-                  prefixIcon: Icon(Icons.search_sharp),
+            TextFormField(
+              readOnly: true,
+              onTap: () async {
+                final ProductModel? result = await showSearch<ProductModel?>(
+                  context: context,
+                  delegate: Searchpage(),
+                );
+
+                if (result != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Detailsprodect(detailprod: result),
+                    ),
+                  );
+                }
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
+                hintText: "Search Products,brands....",
+                prefixIcon: const Icon(Icons.search_sharp),
               ),
             ),
             SizedBox(height: 20),
@@ -232,7 +223,7 @@ class _HomepageState extends State<Homepage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: const [
-                  CategoryCard(title: 'Shoes', icon: "👟", isSelected: true),
+                  CategoryCard(title: 'Shoes', icon: "👟"),
                   SizedBox(width: 12),
                   CategoryCard(title: 'Tech', icon: " 📱"),
                   SizedBox(width: 12),
@@ -266,7 +257,16 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
 
-            Flashsalecard(),
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: flashSale.length,
+                itemBuilder: (context, index) {
+                  return Cardprodecthome(product: flashSale[index]);
+                },
+              ),
+            ),
 
             SizedBox(height: 15),
 
@@ -286,7 +286,16 @@ class _HomepageState extends State<Homepage> {
 
             SizedBox(height: 15),
 
-            Newarrivals(),
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: newProducts.length,
+                itemBuilder: (context, index) {
+                  return Cardprodecthome(product: newProducts[index]);
+                },
+              ),
+            ),
             SizedBox(height: 15),
             Row(
               children: [
@@ -302,7 +311,16 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
             SizedBox(height: 15),
-            Recommend(),
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: recommendedProducts.length,
+                itemBuilder: (context, index) {
+                  return Cardprodecthome(product: recommendedProducts[index]);
+                },
+              ),
+            ),
             SizedBox(height: 20),
           ],
         ),

@@ -1,7 +1,9 @@
 import 'package:e_commerce/feature/home/function/function.dart';
+import 'package:e_commerce/feature/home/models/modelproduct.dart';
+import 'package:e_commerce/feature/search/search.dart';
 import 'package:flutter/material.dart';
 
-AppBar appBarhome() {
+AppBar appBarhome(context) {
   return AppBar(
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +23,11 @@ AppBar appBarhome() {
           borderRadius: BorderRadius.circular(20),
         ),
         child: IconButton(
-          onPressed: () {},
+          onPressed: ()async {
+            await showSearch<ProductModel?>(
+                  context: context,
+                  delegate: Searchpage());
+          },
           icon: Icon(Icons.search_rounded, size: 26),
         ),
       ),
@@ -57,6 +63,5 @@ AppBar appBarhome() {
         ),
       ),
     ],
-
   );
 }

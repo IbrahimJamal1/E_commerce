@@ -4,7 +4,7 @@ import 'package:e_commerce/feature/auth/register/register.dart';
 import 'package:e_commerce/feature/home/home.dart';
 import 'package:flutter/material.dart';
 
-void main (){
+void main() {
   runApp(MyApp());
 }
 
@@ -21,12 +21,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        'onbord':(context) => Onbording(),
-        'login':(context) =>Login(),
-        "register":(context) => Register(),
-        'home':(context) => Home()
+        'onbord': (context) => Onbording(),
+        'login': (context) => Login(),
+        "register": (context) => Register(),
+        'home': (context) => Home(),
+        
       },
-      home:Onbording() ,
+      home: Onbording(),
     );
   }
 }
