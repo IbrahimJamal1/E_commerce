@@ -6,6 +6,7 @@ import 'package:e_commerce/feature/home/widget/cardprodecthome.dart';
 import 'package:e_commerce/feature/home/widget/countdowen.dart';
 import 'package:e_commerce/feature/home/widget/navitem.dart';
 import 'package:e_commerce/feature/home/widget/rowcategorices.dart';
+import 'package:e_commerce/feature/mycart/mycart.dart';
 import 'package:e_commerce/feature/search/search.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class _HomeState extends State<Home> {
   final List<Widget> pages = [
     const Homepage(), //0
 
-    const Center(child: Text("card")), //1
+    const Mycart(), //1
 
     const Center(child: Text("Profile")), //2
   ];
@@ -56,7 +57,7 @@ class _HomeState extends State<Home> {
         notchMargin: 8,
 
         child: SizedBox(
-          height: 50,
+          height: 70,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -111,7 +112,6 @@ class _HomepageState extends State<Homepage> {
               readOnly: true,
               onTap: () async {
                 final ProductModel? result = await showSearch<ProductModel?>(
-                  
                   context: context,
                   delegate: Searchpage(),
                 );

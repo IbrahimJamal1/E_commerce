@@ -2,6 +2,7 @@ import 'package:e_commerce/feature/Onboarding/onbord.dart';
 import 'package:e_commerce/feature/auth/login/login.dart';
 import 'package:e_commerce/feature/auth/register/register.dart';
 import 'package:e_commerce/feature/home/home.dart';
+import 'package:e_commerce/feature/mycart/mycart.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         'login': (context) => Login(),
         "register": (context) => Register(),
         'home': (context) => Home(),
-        
+        'mycart':(context) => Mycart()
       },
       home: Onbording(),
     );

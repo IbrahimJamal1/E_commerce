@@ -1102,3 +1102,28 @@ List<ProductModel> newProducts = [
     sku: "TNF-WND-JKT-YEL",
   ),
 ];
+
+List<ProductModel> datamycart = [
+  ProductModel(
+    id: "9",
+    type: "New Arrival",
+    name: "Noise-Cancelling Earbuds",
+    prands: "Sony",
+    description:
+        "Compact true wireless earbuds with immersive sound and long battery.",
+    image:
+        "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&q=80",
+    price: 89.99,
+    rating: 4.9,
+    numrating: 75,
+    category: "Electronics",
+    onstack: "In Stock",
+    stock: 20,
+    color: const Color(0xFF212121),
+    material: "Recycled ABS composite, polyurethane ear tips",
+    weight: "41g (with case)",
+    waterproof: "Yes — IPX4 splash resistant",
+    origin: "Malaysia",
+    sku: "SNY-EBD-WF1000",
+  ),
+];
