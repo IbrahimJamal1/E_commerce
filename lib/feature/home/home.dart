@@ -111,6 +111,7 @@ class _HomepageState extends State<Homepage> {
               readOnly: true,
               onTap: () async {
                 final ProductModel? result = await showSearch<ProductModel?>(
+                  
                   context: context,
                   delegate: Searchpage(),
                 );
@@ -128,7 +129,7 @@ class _HomepageState extends State<Homepage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                hintText: "Search Products,brands....",
+                hintText: "Search Products,Brands....",
                 prefixIcon: const Icon(Icons.search_sharp),
               ),
             ),

@@ -1,28 +1,69 @@
 import 'package:e_commerce/data.dart';
 import 'package:e_commerce/feature/detailsprodect/detailsprodect.dart';
 import 'package:e_commerce/feature/home/models/modelproduct.dart';
+import 'package:e_commerce/feature/home/widget/rowcategorices.dart';
 import 'package:flutter/material.dart';
 
 class Searchpage extends SearchDelegate<ProductModel?> {
   @override
+  String get searchFieldLabel => 'Search Products,Brands....';
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return Theme.of(context).copyWith(
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
+        elevation: 2,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+
+        fillColor: Color(0xffF5F5F5),
+        hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25)),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+      ),
+    );
+  }
+
+  @override
   List<Widget>? buildActions(BuildContext context) {
     return [
-      IconButton(
-        onPressed: () {
-          query = '';
-        },
-        icon: const Icon(Icons.clear),
+      Container(
+        margin: const EdgeInsets.only(right: 12, top: 8, bottom: 8),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade100,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.grey.shade300, width: 1.5),
+        ),
+        child: IconButton(
+          onPressed: () {
+            query = '';
+          },
+          icon: const Icon(Icons.clear, size: 20),
+        ),
       ),
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        close(context, null);
-      },
-      icon: const Icon(Icons.arrow_back),
+    return Container(
+      margin: const EdgeInsets.only(left: 12, top: 8, bottom: 8),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.grey.shade300, width: 1.5),
+      ),
+      child: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.arrow_back_rounded, size: 22),
+      ),
     );
   }
 
@@ -31,20 +72,6 @@ class Searchpage extends SearchDelegate<ProductModel?> {
     final filter = products.where((p) {
       return p.name.toLowerCase().contains(query.toLowerCase());
     }).toList();
-
-    if (filter.isEmpty) {
-      return const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.search, size: 40),
-            SizedBox(height: 10),
-            Text("No results found"),
-            Text("Try different keywords or browse categories"),
-          ],
-        ),
-      );
-    }
 
     return ListView.builder(
       itemCount: filter.length,
@@ -73,11 +100,41 @@ class Searchpage extends SearchDelegate<ProductModel?> {
     }).toList();
 
     if (query.isEmpty) {
-      return const Center(
-        child: Text(
-          "Search for products...",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight(600)),
-        ),
+      return Column(
+        children: [
+          SizedBox(height: 20),
+          SizedBox(
+            height: 100,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: const [
+                CategoryCard(title: 'Shoes', icon: "👟"),
+                SizedBox(width: 12),
+                CategoryCard(title: 'Tech', icon: " 📱"),
+                SizedBox(width: 12),
+                CategoryCard(title: 'Fashion', icon: "👗"),
+                SizedBox(width: 12),
+                CategoryCard(title: 'Home', icon: "🏠"),
+                SizedBox(width: 12),
+                CategoryCard(title: 'Beauty', icon: "💄"),
+                SizedBox(width: 12),
+                CategoryCard(title: 'Sports', icon: "⚽"),
+                SizedBox(width: 12),
+                CategoryCard(title: 'Books', icon: "📚"),
+                SizedBox(width: 12),
+                CategoryCard(title: 'Toys', icon: "🧸"),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                "Search for products...",
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight(800)),
+              ),
+            ),
+          ),
+        ],
       );
     }
 
@@ -86,7 +143,14 @@ class Searchpage extends SearchDelegate<ProductModel?> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search, size: 60, color: Colors.blue),
+            Text(
+              "🔍",
+              style: TextStyle(
+                fontSize: 60,
+                fontWeight: FontWeight(800),
+                color: Colors.blue,
+              ),
+            ),
             SizedBox(height: 30),
             Text(
               "No results found",
@@ -106,10 +170,27 @@ class Searchpage extends SearchDelegate<ProductModel?> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.all(16),
-          child: Text(
-            "${filter.length} results for $query",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight(300)),
+          margin: EdgeInsets.all(20),
+          child: RichText(
+            text: TextSpan(
+              text: '${filter.length} ',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight(800),
+              ),
+              children: [
+                TextSpan(
+                  text: 'results for ',
+                  style: const TextStyle(fontWeight: FontWeight(300)),
+                ),
+
+                TextSpan(
+                  text: "(${query})",
+                  style: const TextStyle(fontWeight: FontWeight(300)),
+                ),
+              ],
+            ),
           ),
         ),
         Expanded(
