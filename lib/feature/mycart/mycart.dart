@@ -30,7 +30,7 @@ class Mycart extends StatelessWidget {
         width: double.infinity,
         height: 55,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {Navigator.pushNamed(context, 'checkout');},
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
             foregroundColor: Colors.white,

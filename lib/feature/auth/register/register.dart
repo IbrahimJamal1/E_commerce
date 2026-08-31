@@ -42,7 +42,7 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     headregister(selectedImage, () async {
-                      final XFile? image = await pickImageFromGallery();
+                      final XFile? image = await profileimage();
 
                       if (image != null) {
                         setState(() {
