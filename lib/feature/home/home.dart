@@ -7,6 +7,7 @@ import 'package:e_commerce/feature/home/widget/countdowen.dart';
 import 'package:e_commerce/feature/home/widget/navitem.dart';
 import 'package:e_commerce/feature/home/widget/rowcategorices.dart';
 import 'package:e_commerce/feature/mycart/mycart.dart';
+import 'package:e_commerce/feature/profile/profile.dart';
 import 'package:e_commerce/feature/search/search.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> {
 
     const Mycart(), //1
 
-    const Center(child: Text("Profile")), //2
+    const Profile(), //2
   ];
 
   @override

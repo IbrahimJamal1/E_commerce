@@ -1,0 +1,39 @@
+class UserModel {
+  final String uid;
+  final String name;
+  final String email;
+  final String phone;
+  final String pathimage;
+  final DateTime? createdAt;
+
+  UserModel({
+    required this.uid,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.pathimage,
+    this.createdAt,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'pathimage': pathimage,
+      'createdAt': createdAt,
+    };
+  }
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      uid: map['uid'] ?? '',
+      name: map['name'] ?? '',
+      email: map['email'] ?? '',
+      phone: map['phone'] ?? '',
+      pathimage: map['pathimage'] ?? '',
+      createdAt: map['createdAt']?.toDate(),
+    );
+  }
+}

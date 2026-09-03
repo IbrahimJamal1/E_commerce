@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+
+Widget headprofilepage(user) {
+  return Stack(
+    clipBehavior: Clip.none,
+    children: [
+      Container(
+        width: double.infinity,
+        height: 130,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF0D47A1), Color(0xFF1976D2), Color(0xFF64B5F6)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+      ),
+
+      Row(
+        children: [
+          Center(
+            child: Container(
+              margin: EdgeInsets.all(20),
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: ClipOval(
+                child: Image.network(
+                  'https://lh3.googleusercontent.com/a/ACg8ocIOpPfH67PxysdKNbMd_C_S7Sq73wb8d9Kf-CreVdOESFOGlg=s96-c',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+
+          Column(
+            children: [
+              Text(
+                user.name,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight(600),
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                user.email,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight(300),
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      SizedBox(height: 30),
+    ],
+  );
+}

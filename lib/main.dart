@@ -7,6 +7,7 @@ import 'package:e_commerce/feature/checkout/checkout.dart';
 import 'package:e_commerce/feature/home/home.dart';
 import 'package:e_commerce/feature/mycart/mycart.dart';
 import 'package:e_commerce/feature/orderstate/orderstate.dart';
+import 'package:e_commerce/feature/profile/cubit/cubit/profile_cubit.dart';
 import 'package:e_commerce/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,6 +23,7 @@ void main() async {
       providers: [
         BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
         BlocProvider<RegisterCubit>(create: (context) => RegisterCubit()),
+        BlocProvider<ProfileCubit>(create: (context) => ProfileCubit()),
       ],
       child: const MyApp(),
     ),
