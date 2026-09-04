@@ -3,7 +3,6 @@ import 'package:e_commerce/core/validation/formvalid.dart';
 import 'package:e_commerce/feature/auth/login/cubit/login_cubit.dart';
 import 'package:e_commerce/feature/auth/widgets/forgetpassword.dart';
 import 'package:e_commerce/feature/auth/widgets/snackbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -270,11 +269,7 @@ class _LoginState extends State<Login> {
 
                               Expanded(
                                 child: InkWell(
-                                  onTap: () {
-                                    print(
-                                      FirebaseAuth.instance.currentUser?.uid,
-                                    );
-                                  },
+                                  onTap: () {},
                                   child: Container(
                                     alignment: Alignment.center,
                                     height: 50,

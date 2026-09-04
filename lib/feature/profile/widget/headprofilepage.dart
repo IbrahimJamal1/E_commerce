@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: strict_top_level_inference
 Widget headprofilepage(user) {
   return Stack(
     clipBehavior: Clip.none,

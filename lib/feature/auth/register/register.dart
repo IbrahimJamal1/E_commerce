@@ -1,4 +1,4 @@
-import 'package:e_commerce/core/service/imageURL.dart';
+import 'package:e_commerce/core/service/imageurl.dart';
 import 'package:e_commerce/core/service/imagepaker.dart';
 import 'package:e_commerce/core/validation/formvalid.dart';
 import 'package:e_commerce/feature/auth/register/cubit/register_cubit.dart';

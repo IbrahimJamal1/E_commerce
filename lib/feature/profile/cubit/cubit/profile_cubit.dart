@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:e_commerce/feature/profile/getuserbyid.dart';
 import 'package:e_commerce/feature/profile/module/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 part 'profile_state.dart';

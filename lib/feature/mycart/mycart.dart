@@ -1,4 +1,4 @@
-import 'package:e_commerce/feature/mycart/widget/mycartCard.dart';
+import 'package:e_commerce/feature/mycart/widget/mycartcard.dart';
 import 'package:flutter/material.dart';
 
 class Mycart extends StatelessWidget {

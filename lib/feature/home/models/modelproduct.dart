@@ -55,7 +55,7 @@ class ProductModel {
       'category': category,
       'onstack': onstack,
       'stock': stock,
-      'color': color.value,
+      'color': color.toARGB32(),
       'material': material,
       'weight': weight,
       'waterproof': waterproof,

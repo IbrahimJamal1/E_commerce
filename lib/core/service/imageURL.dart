@@ -1,7 +1,6 @@
 import 'package:cloudinary/cloudinary.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class CloudinaryService {
   final Cloudinary cloudinary = Cloudinary.unsignedConfig(
     cloudName: 'bg9fpirs',
@@ -19,15 +18,11 @@ class CloudinaryService {
         return response.secureUrl;
       }
 
-      print('Status: ${response.error}');
-      return null;
+      throw ('Status: ${response.error}');
     } on DioException catch (e) {
-      print('Status Code: ${e.response?.statusCode}');
-      print('Response: ${e.response?.data}');
-      return null;
+      throw ('Status Code: ${e.response?.statusCode}');
     } catch (e) {
-      print('Error: $e');
-      return null;
+      throw ('Error: $e');
     }
   }
 }

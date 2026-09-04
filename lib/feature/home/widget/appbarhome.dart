@@ -34,8 +34,6 @@ AppBar appBarhome(BuildContext context) {
 
         final data = snapshot.data!.data() as Map<String, dynamic>;
 
-        print(data);
-
         final name = data['name'] ?? 'User';
 
         return Column(
