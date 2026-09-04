@@ -41,6 +41,8 @@ dependencies:
   bloc: ^9.2.1
   flutter_bloc: ^9.1.1
   cloud_firestore: ^6.9.0
+  firebase_storage: ^13.5.0
+  cloudinary: ^1.2.2
   # flutter_secure_storage: ^11.0.0
 
 dev_dependencies:

@@ -25,10 +25,7 @@ Widget headprofilepage(user) {
               height: 100,
               decoration: BoxDecoration(shape: BoxShape.circle),
               child: ClipOval(
-                child: Image.network(
-                  'https://lh3.googleusercontent.com/a/ACg8ocIOpPfH67PxysdKNbMd_C_S7Sq73wb8d9Kf-CreVdOESFOGlg=s96-c',
-                  fit: BoxFit.cover,
-                ),
+                child: Image.network(user.pathimage, fit: BoxFit.cover),
               ),
             ),
           ),

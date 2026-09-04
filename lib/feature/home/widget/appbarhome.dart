@@ -47,7 +47,7 @@ AppBar appBarhome(BuildContext context) {
             ),
             const SizedBox(height: 10),
             Text(
-              "Hello, $name",
+              "Hello, ${name.toString().split(' ').first}",
               style: const TextStyle(fontWeight: FontWeight.w800),
             ),
           ],

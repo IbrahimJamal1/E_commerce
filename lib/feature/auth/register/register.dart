@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/service/imageURL.dart';
 import 'package:e_commerce/core/service/imagepaker.dart';
 import 'package:e_commerce/core/validation/formvalid.dart';
 import 'package:e_commerce/feature/auth/register/cubit/register_cubit.dart';
@@ -22,6 +23,7 @@ class _RegisterState extends State<Register> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController phone = TextEditingController();
+  String? imageUrl;
   final GlobalKey<FormState> registerKey = GlobalKey<FormState>();
 
   @override
@@ -31,6 +33,7 @@ class _RegisterState extends State<Register> {
     password.dispose();
     phone.dispose();
     selectedImage = null;
+    imageUrl = null;
     super.dispose();
   }
 
@@ -80,6 +83,10 @@ class _RegisterState extends State<Register> {
                             setState(() {
                               selectedImage = image;
                             });
+
+                            imageUrl = await CloudinaryService().uploadImage(
+                              image,
+                            );
                           }
                         }),
                         SizedBox(height: 30),
@@ -268,7 +275,7 @@ class _RegisterState extends State<Register> {
                                   password: password.text.trim(),
                                   phone: phone.text.trim(),
                                   name: name.text.trim(),
-                                  pathimage: selectedImage!.path.toString(),
+                                  pathimage: imageUrl.toString(),
                                 );
                               }
                             },
@@ -308,7 +315,7 @@ class _RegisterState extends State<Register> {
                         onPressed: () {
                           Navigator.pushNamed(context, 'login');
                         },
-                        child: const Text("Sign In"),
+                        child: Text("Sign In"),
                       ),
                     ],
                   ),
