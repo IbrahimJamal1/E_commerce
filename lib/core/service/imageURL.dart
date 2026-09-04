@@ -1,6 +1,6 @@
 import 'package:cloudinary/cloudinary.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:dio/dio.dart';
+
 
 class CloudinaryService {
   final Cloudinary cloudinary = Cloudinary.unsignedConfig(

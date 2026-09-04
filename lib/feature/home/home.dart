@@ -1,5 +1,5 @@
-import 'package:e_commerce/data.dart';
 import 'package:e_commerce/feature/detailsprodect/detailsprodect.dart';
+import 'package:e_commerce/feature/home/getprodect.dart';
 import 'package:e_commerce/feature/home/models/modelproduct.dart';
 import 'package:e_commerce/feature/home/widget/appbarhome.dart';
 import 'package:e_commerce/feature/home/widget/cardprodecthome.dart';
@@ -101,6 +101,18 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  late Future<List<ProductModel>> productsflash;
+  late Future<List<ProductModel>> productsnew;
+  late Future<List<ProductModel>> productsrecommend;
+
+  @override
+  void initState() {
+    super.initState();
+    productsflash = getFlashSale();
+    productsnew = getNewProducts();
+    productsrecommend = getrecommendedProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -119,6 +131,7 @@ class _HomepageState extends State<Homepage> {
 
                 if (result != null) {
                   Navigator.push(
+                    // ignore: use_build_context_synchronously
                     context,
                     MaterialPageRoute(
                       builder: (context) => Detailsprodect(detailprod: result),
@@ -259,17 +272,37 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
 
-            SizedBox(
-              height: 300,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: flashSale.length,
-                itemBuilder: (context, index) {
-                  return Cardprodecthome(product: flashSale[index]);
-                },
-              ),
-            ),
+            FutureBuilder<List<ProductModel>>(
+              future: productsflash,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox(
+                    height: 300,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
 
+                if (snapshot.hasError) {
+                  return SizedBox(
+                    height: 300,
+                    child: Center(child: Text('Error: ${snapshot.error}')),
+                  );
+                }
+
+                final products = snapshot.data ?? [];
+
+                return SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return Cardprodecthome(product: products[index]);
+                    },
+                  ),
+                );
+              },
+            ),
             SizedBox(height: 15),
 
             Row(
@@ -288,16 +321,38 @@ class _HomepageState extends State<Homepage> {
 
             SizedBox(height: 15),
 
-            SizedBox(
-              height: 300,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: newProducts.length,
-                itemBuilder: (context, index) {
-                  return Cardprodecthome(product: newProducts[index]);
-                },
-              ),
+            FutureBuilder<List<ProductModel>>(
+              future: productsnew,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox(
+                    height: 300,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                if (snapshot.hasError) {
+                  return SizedBox(
+                    height: 300,
+                    child: Center(child: Text('Error: ${snapshot.error}')),
+                  );
+                }
+
+                final products = snapshot.data ?? [];
+
+                return SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return Cardprodecthome(product: products[index]);
+                    },
+                  ),
+                );
+              },
             ),
+
             SizedBox(height: 15),
             Row(
               children: [
@@ -313,15 +368,36 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
             SizedBox(height: 15),
-            SizedBox(
-              height: 300,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: recommendedProducts.length,
-                itemBuilder: (context, index) {
-                  return Cardprodecthome(product: recommendedProducts[index]);
-                },
-              ),
+            FutureBuilder<List<ProductModel>>(
+              future: productsrecommend,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox(
+                    height: 300,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                if (snapshot.hasError) {
+                  return SizedBox(
+                    height: 300,
+                    child: Center(child: Text('Error: ${snapshot.error}')),
+                  );
+                }
+
+                final products = snapshot.data ?? [];
+
+                return SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return Cardprodecthome(product: products[index]);
+                    },
+                  ),
+                );
+              },
             ),
             SizedBox(height: 20),
           ],

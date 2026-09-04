@@ -1,10 +1,16 @@
-import 'package:e_commerce/data.dart';
 import 'package:e_commerce/feature/detailsprodect/detailsprodect.dart';
+import 'package:e_commerce/feature/home/getprodect.dart';
 import 'package:e_commerce/feature/home/models/modelproduct.dart';
 import 'package:e_commerce/feature/home/widget/rowcategorices.dart';
 import 'package:flutter/material.dart';
 
 class Searchpage extends SearchDelegate<ProductModel?> {
+  late Future<List<ProductModel>> productsFuture;
+
+  Searchpage() {
+    productsFuture = getProducts();
+  }
+
   @override
   String get searchFieldLabel => 'Search Products,Brands....';
 
@@ -15,9 +21,8 @@ class Searchpage extends SearchDelegate<ProductModel?> {
         backgroundColor: Colors.white,
         elevation: 2,
       ),
-      inputDecorationTheme: InputDecorationTheme(
+      inputDecorationTheme: const InputDecorationTheme(
         filled: true,
-
         fillColor: Color(0xffF5F5F5),
         hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
         border: OutlineInputBorder(
@@ -69,23 +74,55 @@ class Searchpage extends SearchDelegate<ProductModel?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final filter = products.where((p) {
-      return p.name.toLowerCase().contains(query.toLowerCase());
-    }).toList();
+    return FutureBuilder<List<ProductModel>>(
+      future: productsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-    return ListView.builder(
-      itemCount: filter.length,
-      itemBuilder: (context, index) {
-        final product = filter[index];
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
 
-        return ListTile(
-          title: Text(product.name),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Detailsprodect(detailprod: product),
+        final allProducts = snapshot.data ?? [];
+
+        final filter = allProducts.where((p) {
+          return p.name.toLowerCase().contains(query.toLowerCase());
+        }).toList();
+
+        if (filter.isEmpty) {
+          return const Center(
+            child: Text(
+              'No results found',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          );
+        }
+
+        return ListView.builder(
+          itemCount: filter.length,
+          itemBuilder: (context, index) {
+            final product = filter[index];
+
+            return ListTile(
+              title: Text(product.name),
+              subtitle: Text(product.prands),
+              leading: Image.network(
+                product.image,
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
               ),
+              trailing: Text('${product.numrating.round()}K'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Detailsprodect(detailprod: product),
+                  ),
+                );
+              },
             );
           },
         );
@@ -95,14 +132,11 @@ class Searchpage extends SearchDelegate<ProductModel?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final filter = products.where((p) {
-      return p.name.toLowerCase().contains(query.toLowerCase());
-    }).toList();
-
     if (query.isEmpty) {
       return Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
+
           SizedBox(
             height: 100,
             child: ListView(
@@ -110,7 +144,7 @@ class Searchpage extends SearchDelegate<ProductModel?> {
               children: const [
                 CategoryCard(title: 'Shoes', icon: "👟"),
                 SizedBox(width: 12),
-                CategoryCard(title: 'Tech', icon: " 📱"),
+                CategoryCard(title: 'Tech', icon: "📱"),
                 SizedBox(width: 12),
                 CategoryCard(title: 'Fashion', icon: "👗"),
                 SizedBox(width: 12),
@@ -126,11 +160,12 @@ class Searchpage extends SearchDelegate<ProductModel?> {
               ],
             ),
           ),
-          Expanded(
+
+          const Expanded(
             child: Center(
               child: Text(
                 "Search for products...",
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight(800)),
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
               ),
             ),
           ),
@@ -138,84 +173,103 @@ class Searchpage extends SearchDelegate<ProductModel?> {
       );
     }
 
-    if (filter.isEmpty) {
-      return const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "🔍",
-              style: TextStyle(
-                fontSize: 60,
-                fontWeight: FontWeight(800),
-                color: Colors.blue,
-              ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              "No results found",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight(600)),
-            ),
-            SizedBox(height: 15),
-            Text(
-              "Try different keywords or browse categories",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight(300)),
-            ),
-          ],
-        ),
-      );
-    }
+    return FutureBuilder<List<ProductModel>>(
+      future: productsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          margin: EdgeInsets.all(20),
-          child: RichText(
-            text: TextSpan(
-              text: '${filter.length} ',
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight(800),
-              ),
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        final allProducts = snapshot.data ?? [];
+
+        final filter = allProducts.where((p) {
+          return p.name.toLowerCase().contains(query.toLowerCase());
+        }).toList();
+
+        if (filter.isEmpty) {
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextSpan(
-                  text: 'results for ',
-                  style: const TextStyle(fontWeight: FontWeight(300)),
+                Text("🔍", style: TextStyle(fontSize: 60)),
+                SizedBox(height: 30),
+                Text(
+                  "No results found",
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600),
                 ),
-
-                TextSpan(
-                  text: "(${query})",
-                  style: const TextStyle(fontWeight: FontWeight(300)),
+                SizedBox(height: 15),
+                Text(
+                  "Try different keywords or browse categories",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
                 ),
               ],
             ),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: filter.length,
-            itemBuilder: (context, index) {
-              final product = filter[index];
-              return ListTile(
-                title: Text(product.name),
-                subtitle: Text(product.prands),
-                leading: Image.network(product.image),
-                trailing: Text("${product.numrating.round().toString()}K"),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Detailsprodect(detailprod: product),
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(20),
+              child: RichText(
+                text: TextSpan(
+                  text: '${filter.length} ',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  children: [
+                    const TextSpan(
+                      text: 'results for ',
+                      style: TextStyle(fontWeight: FontWeight.w300),
                     ),
+                    TextSpan(
+                      text: '($query)',
+                      style: const TextStyle(fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: filter.length,
+                itemBuilder: (context, index) {
+                  final product = filter[index];
+
+                  return ListTile(
+                    title: Text(product.name),
+                    subtitle: Text(product.prands),
+                    leading: Image.network(
+                      product.image,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                    trailing: Text('${product.numrating.round()}K'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Detailsprodect(detailprod: product),
+                        ),
+                      );
+                    },
                   );
                 },
-              );
-            },
-          ),
-        ),
-      ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

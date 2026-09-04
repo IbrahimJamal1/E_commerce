@@ -40,4 +40,50 @@ class ProductModel {
     this.origin,
     this.sku,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': type,
+      'name': name,
+      'prands': prands,
+      'description': description,
+      'image': image,
+      'price': price,
+      'rating': rating,
+      'numrating': numrating,
+      'category': category,
+      'onstack': onstack,
+      'stock': stock,
+      'color': color.value,
+      'material': material,
+      'weight': weight,
+      'waterproof': waterproof,
+      'origin': origin,
+      'sku': sku,
+    };
+  }
+
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      id: json['id'] as String,
+      type: json['type'] as String,
+      name: json['name'] as String,
+      prands: json['prands'] as String,
+      description: json['description'] as String,
+      image: json['image'] as String,
+      price: (json['price'] as num).toDouble(),
+      rating: (json['rating'] as num).toDouble(),
+      numrating: (json['numrating'] as num).toDouble(),
+      category: json['category'] as String,
+      onstack: json['onstack'] as String,
+      stock: (json['stock'] as num).toInt(),
+      color: Color((json['color'] as num).toInt()),
+      material: json['material'] as String?,
+      weight: json['weight'] as String?,
+      waterproof: json['waterproof'] as String?,
+      origin: json['origin'] as String?,
+      sku: json['sku'] as String?,
+    );
+  }
 }
