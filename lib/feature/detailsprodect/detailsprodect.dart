@@ -1,7 +1,10 @@
+import 'package:e_commerce/feature/auth/widgets/snackbar.dart';
 import 'package:e_commerce/feature/detailsprodect/widget/desprodect.dart';
 import 'package:e_commerce/feature/detailsprodect/widget/spaceprodect.dart';
 import 'package:e_commerce/feature/home/models/modelproduct.dart';
+import 'package:e_commerce/feature/mycart/cartstore/addtocatlocal.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Detailsprodect extends StatefulWidget {
   final ProductModel detailprod;
@@ -28,9 +31,10 @@ class _DetailsprodectState extends State<Detailsprodect> {
   int currentPage = 0;
   String? selectedSize;
 
-  int quantity = 0;
+  int quantity = 1;
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Addtocatlocal>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -331,30 +335,26 @@ class _DetailsprodectState extends State<Detailsprodect> {
         padding: const EdgeInsets.all(20),
         child: Row(
           children: [
-            Expanded(
-              flex: 2,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.blue),
-                ),
-                child: const Text(
-                  "Buy Now",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-            ),
-
+            
             const SizedBox(width: 10),
 
             Expanded(
               flex: 1,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  cart.addToCart(
+                    id: widget.detailprod.id,
+                    name: (widget.detailprod.name),
+                    price: widget.detailprod.price,
+                    quantity: quantity,
+                    selectedSize: selectedSize,
+                    image: widget.detailprod.image,
+                    color: widget.detailprod.color,
+                    stock: widget.detailprod.stock,
+                  );
+                  showMySnackBar(context, "Product added to cart",isError: false);
+                  Navigator.pop(context);
+                },
                 child: const Text(
                   "Add Cart",
                   style: TextStyle(

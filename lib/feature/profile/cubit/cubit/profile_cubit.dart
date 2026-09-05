@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/feature/profile/getuserbyid.dart';
 import 'package:e_commerce/feature/profile/module/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,5 +28,22 @@ class ProfileCubit extends Cubit<ProfileState> {
     } catch (e) {
       emit(ProfileError(e.toString()));
     }
+  }
+
+  Future<int> getOrders() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+
+    if (uid == null) {
+      throw Exception('User is not logged in');
+    }
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('orders')
+        .orderBy('createdAt', descending: true)
+        .get();
+
+    return snapshot.docs.length;
   }
 }

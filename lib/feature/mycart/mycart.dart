@@ -1,11 +1,14 @@
+import 'package:e_commerce/feature/mycart/cartstore/addtocatlocal.dart';
 import 'package:e_commerce/feature/mycart/widget/mycartcard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Mycart extends StatelessWidget {
   const Mycart({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Addtocatlocal>(context);
     return Scaffold(
       backgroundColor: Color(0xFFF7F7F7),
       appBar: AppBar(
@@ -17,7 +20,7 @@ class Mycart extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 30),
             child: Text(
-              "5 itemCount",
+              "${cart.myCart.length} itemCount",
               style: TextStyle(color: Colors.blueAccent),
             ),
           ),

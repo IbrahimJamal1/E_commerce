@@ -4,7 +4,9 @@ import 'package:e_commerce/feature/auth/login/login.dart';
 import 'package:e_commerce/feature/auth/register/cubit/register_cubit.dart';
 import 'package:e_commerce/feature/auth/register/register.dart';
 import 'package:e_commerce/feature/checkout/checkout.dart';
+import 'package:e_commerce/feature/checkout/cubit/checkout_cubit.dart';
 import 'package:e_commerce/feature/home/home.dart';
+import 'package:e_commerce/feature/mycart/cartstore/addtocatlocal.dart';
 import 'package:e_commerce/feature/mycart/mycart.dart';
 import 'package:e_commerce/feature/orderstate/orderstate.dart';
 import 'package:e_commerce/feature/profile/cubit/cubit/profile_cubit.dart';
@@ -12,6 +14,7 @@ import 'package:e_commerce/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
@@ -22,8 +25,10 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
+        BlocProvider<CheckoutCubit>(create: (context) => CheckoutCubit()),
         BlocProvider<RegisterCubit>(create: (context) => RegisterCubit()),
         BlocProvider<ProfileCubit>(create: (context) => ProfileCubit()),
+        ChangeNotifierProvider(create: (_) => Addtocatlocal()),
       ],
       child: const MyApp(),
     ),

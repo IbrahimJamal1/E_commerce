@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:e_commerce/core/service/imagepaker.dart';
+import 'package:e_commerce/feature/mycart/cartstore/addtocatlocal.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class Paymentsheet extends StatefulWidget {
   const Paymentsheet({super.key});
@@ -14,6 +16,7 @@ class _PaymentsheetState extends State<Paymentsheet> {
   XFile? paymentImage;
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Addtocatlocal>(context);
     return Column(
       children: [
         InkWell(
@@ -78,7 +81,7 @@ class _PaymentsheetState extends State<Paymentsheet> {
                     Text("Subtotal"),
                     Spacer(),
                     Text(
-                      "\$547.99",
+                      "\$${cart.calculateTotalPrice().toStringAsFixed(2)}",
                       style: TextStyle(fontWeight: FontWeight(600)),
                     ),
                   ],
@@ -86,10 +89,10 @@ class _PaymentsheetState extends State<Paymentsheet> {
                 SizedBox(height: 20),
                 Row(
                   children: [
-                    Text("Discount (15%)"),
+                    Text("Discount(15%)"),
                     Spacer(),
                     Text(
-                      "\$-82.20",
+                      "\$-${cart.discount().toStringAsFixed(2)}",
                       style: TextStyle(
                         fontWeight: FontWeight(600),
                         color: const Color(0xFF08F410),
@@ -110,10 +113,7 @@ class _PaymentsheetState extends State<Paymentsheet> {
                   children: [
                     Text("Tax"),
                     Spacer(),
-                    Text(
-                      "\$43.84",
-                      style: TextStyle(fontWeight: FontWeight(600)),
-                    ),
+                    Text("\$20", style: TextStyle(fontWeight: FontWeight(600))),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -128,7 +128,7 @@ class _PaymentsheetState extends State<Paymentsheet> {
                     ),
                     Spacer(),
                     Text(
-                      "\$43.84",
+                      "\$ ${cart.total().toStringAsFixed(2)}",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight(800),

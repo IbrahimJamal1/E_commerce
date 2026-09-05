@@ -1,137 +1,131 @@
+import 'package:e_commerce/feature/mycart/cartstore/addtocatlocal.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Mycartcard extends StatefulWidget {
+class Mycartcard extends StatelessWidget {
   const Mycartcard({super.key});
 
   @override
-  State<Mycartcard> createState() => _MycartcardState();
-}
-
-class _MycartcardState extends State<Mycartcard> {
-  int quantity = 0;
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(20),
+    final cart = Provider.of<Addtocatlocal>(context);
 
-      width: double.infinity,
-      height: 130,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.white),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 100,
-            height: 130,
-            decoration: BoxDecoration(
-              color: Colors.grey.shade50,
-              border: Border.all(color: Colors.grey, width: 1),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(19),
-              child: Image.network(
-                "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&q=80",
-                fit: BoxFit.cover,
-              ),
-            ),
+    if (cart.myCart.isEmpty) {
+      return const Center(
+        child: Text(
+          "Your cart is empty",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(20),
+      itemCount: cart.myCart.length,
+      itemBuilder: (context, index) {
+        final item = cart.myCart[index];
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 15),
+          width: double.infinity,
+          height: 130,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
           ),
-          SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Text(
-                "Brand",
-                style: TextStyle(fontWeight: FontWeight(300), fontSize: 14),
-              ),
-
-              Text(
-                "name",
-                style: TextStyle(fontWeight: FontWeight(800), fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              Text(
-                " Size: M · Color: Black",
-                style: TextStyle(fontWeight: FontWeight(300), fontSize: 14),
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Text(
-                    "1998\$",
-                    style: TextStyle(fontWeight: FontWeight(800), fontSize: 18),
+              // ================= IMAGE =================
+              Container(
+                width: 100,
+                height: 130,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  border: Border.all(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(19),
+                  child: Image.network(
+                    item.image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.image_not_supported, size: 40);
+                    },
                   ),
+                ),
+              ),
 
-                  Container(
-                    margin: EdgeInsets.only(left: 0),
-                    width: 150,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
-                        color: const Color(0xFFF7F7F7),
+              const SizedBox(width: 10),
+
+              // ================= INFO =================
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      item.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17,
                       ),
-                      borderRadius: BorderRadius.circular(15),
                     ),
 
-                    child: Row(
+                    const SizedBox(height: 8),
+
+                    Text(
+                      "Size: ${item.selectedSize ?? 'N/A'}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    Row(
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              quantity++;
-                            });
-                          },
-                          child: Text(
-                            "+",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight(800),
-                            ),
-                          ),
-                        ),
-                        Spacer(),
                         Text(
-                          quantity.toString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight(800),
+                          "\$${item.price}",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 17,
                           ),
                         ),
-                        Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              if (quantity > 0) {
-                                quantity--;
-                              }
-                            });
-                          },
-                          child: Text(
-                            "-",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight(800),
-                            ),
+
+                        const Spacer(),
+
+                        // ================= QUANTITY =================
+                        Container(
+                          height: 38,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey.shade200),
+                            borderRadius: BorderRadius.circular(12),
                           ),
+                          child:Text(item.quantity.toString()) ,
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+
+              // ================= DELETE =================
+              Container(
+                margin: EdgeInsets.only(left: 30),
+                child: IconButton(
+                  onPressed: () {
+                    cart.deleteFromCart(index);
+                  },
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                ),
               ),
             ],
           ),
-
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete, color: Colors.red),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

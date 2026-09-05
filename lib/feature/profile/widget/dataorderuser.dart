@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget dataorder() {
+Widget dataorder(order) {
   return Container(
     color: Colors.white,
     padding: EdgeInsets.all(30),
@@ -15,7 +15,7 @@ Widget dataorder() {
               ),
               SizedBox(height: 10),
               Text(
-                '4',
+                "$order orders",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight(800)),
               ),
             ],

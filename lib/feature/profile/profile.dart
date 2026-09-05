@@ -13,10 +13,24 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  int orderCount = 0;
+
   @override
   void initState() {
     super.initState();
+
     context.read<ProfileCubit>().getProfile();
+    loadOrderCount();
+  }
+
+  Future<void> loadOrderCount() async {
+    final count = await context.read<ProfileCubit>().getOrders();
+
+    if (mounted) {
+      setState(() {
+        orderCount = count;
+      });
+    }
   }
 
   @override
@@ -35,6 +49,7 @@ class _ProfileState extends State<Profile> {
 
         if (state is ProfileSuccess) {
           final user = state.user;
+
           return Scaffold(
             backgroundColor: Color(0xFFF5F9FF),
             appBar: AppBar(
@@ -48,7 +63,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   headprofilepage(user),
                   SizedBox(height: 15),
-                  dataorder(),
+                  dataorder(orderCount),
                   SizedBox(height: 15),
                   dataacount(
                     "Personal Information",
@@ -59,7 +74,7 @@ class _ProfileState extends State<Profile> {
                   SizedBox(height: 15),
                   dataacount(
                     "My order",
-                    "4 Order",
+                    "$orderCount Order",
                     Icon(Icons.production_quantity_limits),
                     () {},
                   ),
