@@ -32,6 +32,7 @@ Widget headprofilepage(user) {
           ),
 
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 user.name,
@@ -41,6 +42,7 @@ Widget headprofilepage(user) {
                   color: Colors.white,
                 ),
               ),
+              SizedBox(height: 10,),
               Text(
                 user.email,
                 style: TextStyle(
