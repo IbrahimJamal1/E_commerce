@@ -1,3 +1,4 @@
+ <img src="imageprojrct/image3.jpg" width="300"/>
 # 🛒 E-Commerce Flutter App
 
 A modern and user-friendly **E-Commerce mobile application** built with Flutter.  
@@ -10,7 +11,7 @@ The application provides a complete shopping experience, from authentication and
 
 <p align="center">
   <img src="imageprojrct/image1.jpg" width="300"/>
- <img src="imageprojrct/image3.jpg" width="300"/>
+
    <img src="imageprojrct/image2.jpg" width="300"/>
 </p>
 
