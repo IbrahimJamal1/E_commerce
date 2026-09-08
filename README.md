@@ -9,28 +9,37 @@ The application provides a complete shopping experience, from authentication and
 
 
 <p align="center">
-  <img src="imageprojrct/image1.png" width="250"/>
- 
+  <img src="imageprojrct/image1.jpg" width="300"/>
+ <img src="imageprojrct/image3.jpg" width="300"/>
+   <img src="imageprojrct/image2.jpg" width="300"/>
 </p>
 
-### Shopping
+<p align="center">
+  <img src="imageprojrct/Screenshot_1788869598.png" width="300"/>
+ <img src="imageprojrct/Screenshot_1788869602.png" width="300"/>
+  <img src="imageprojrct/Screenshot_1788869629.png" width="300"/>
+  
+  <img src="imageprojrct/Screenshot_1788869658.png" width="300"/>
+ <img src="imageprojrct/Screenshot_1788869664.png" width="300"/>
+  <img src="imageprojrct/Screenshot_1788869691.png" width="300"/>
+  
+  <img src="imageprojrct/Screenshot_1788869783.png" width="300"/>
+ <img src="imageprojrct/Screenshot_1788869788.png" width="300"/>
+  <img src="imageprojrct/Screenshot_1788869822.png" width="300"/>
+  
+</p>
+
+
+
 
 <p align="center">
- <img src="imageprojrct/image2.png" width="250"/>
+
 </p>
 
 
 
 <p align="center">
-  <img src="imageprojrct/image3.png" width="250"/>
-</p>
-
-
-
-## 📱 App Preview
-
-<p align="center">
-  <img src="assets/images/ecommerce_preview.jpg" width="900"/>
+  
 </p>
 
 ---
